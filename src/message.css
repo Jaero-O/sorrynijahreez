@@ -1,0 +1,475 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #e8edf4;
+  font-family: 'Nunito', sans-serif;
+}
+
+body,
+#root {
+  font-family: 'Nunito', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  background-image: url('src/assets/background.jpg');
+  background-size:contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* ── Animations ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.85) translateY(6px); }
+  100% { opacity: 1; transform: scale(1)    translateY(0);   }
+}
+
+@keyframes slideUp {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0);   }
+  30%           { transform: translateY(-6px); }
+}
+
+/* ── Bubble / Row Animations ── */
+.bubble-enter {
+  animation: popIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.msg-row {
+  animation: slideUp 0.18s ease forwards;
+}
+
+/* ── App Shell ── */
+.chat-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  box-shadow: 0 2px 12px rgba(30, 64, 175, 0.3);
+  flex-shrink: 0;
+  padding-top: max(14px, env(safe-area-inset-top));
+}
+
+.chat-header__avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 2.5px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  font-weight: 800;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden; /* clips the photo to the circle */
+}
+
+/* 🖼️  Header avatar image */
+.chat-header__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.chat-header__name {
+  font-weight: 700;
+  font-size: 17px;
+  color: #fff;
+  letter-spacing: 0.2px;
+  text-align: left;
+  margin-bottom:-8px;
+  padding-left:2px;
+}
+
+.chat-header__status {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.3px;
+}
+
+.chat-header__actions {
+  margin-left: auto;
+  display: flex;
+  gap: 14px;
+}
+
+.chat-header__icon {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ── Date Chip ── */
+.date-chip {
+  text-align: center;
+  padding: 12px 0 4px;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+/* ── Message List ── */
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #f8faff;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Message Row ── */
+.message-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.message-row--me  { justify-content: flex-end; }
+.message-row--jah { justify-content: flex-start; }
+.message-row--gap-small { margin-top: 2px; }
+.message-row--gap-large { margin-top: 10px; }
+
+/* ── Avatars ── */
+.msg-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden; /* clips photo to circle */
+}
+
+.msg-avatar--hidden {
+  opacity: 0;
+}
+
+/* 🖼️  Bubble avatar image (beside messages) */
+.msg-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* ── Bubbles (text) ── */
+.bubble {
+  max-width: 72%;
+  padding: 10px 14px;
+  font-size: 14.5px;
+  line-height: 1.45;
+  word-break: break-word;
+  align-items: left;
+}
+
+.bubble--me {
+  border-radius: 20px 20px 5px 20px;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  color: #fff;
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.3);
+  text-align:right;
+}
+
+.bubble--jah {
+  border-radius: 20px 20px 20px 5px;
+  background: #fff;
+  color: #1e293b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+/* ── Image bubble ── */
+.bubble--image {
+  /* Override default padding so the image fills edge-to-edge inside the bubble */
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
+  border-radius: 20px 20px 20px 5px;
+  /* Constrain width so it doesn't take the full max-width on desktop */
+  max-width: 62%;
+}
+
+/* 🖼️  The actual image inside a message bubble */
+.msg-image {
+  display: block;
+  width: 100%;
+  /* Cap height so very tall images stay reasonable */
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Optional caption below the image */
+.msg-image__caption {
+  padding: 8px 12px 10px;
+  font-size: 13px;
+  color: #475569;
+  background: #fff;
+  line-height: 1.4;
+  border-radius: 0 0 20px 5px;
+}
+
+/* ── Typing Indicator ── */
+.typing-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.typing-bubble {
+  padding: 12px 16px;
+  border-radius: 20px 20px 20px 5px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.typing-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #94a3b8;
+  display: inline-block;
+  animation: typing-bounce 1.3s infinite ease-in-out;
+}
+
+/* ── Done Banner ── */
+.done-banner {
+  text-align: center;
+  padding: 20px 0 8px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── Input Bar ── */
+.input-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 10px 14px 14px;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+  flex-shrink: 0;
+  padding-bottom: max(14px, env(safe-area-inset-bottom));
+}
+
+.input-field {
+  flex: 1;
+  border-radius: 24px;
+  padding: 10px 16px;
+  transition: border-color 0.2s, background 0.2s;
+  min-height: 46px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input-field--active {
+  border: 1.5px solid #3b82f6;
+  background: #f0f6ff;
+}
+
+.input-field--idle {
+  border: 1.5px solid #e2e8f0;
+  background: #f8faff;
+}
+
+.input-text {
+  font-size: 14.5px;
+  color: #1e293b;
+  line-height: 1.45;
+  min-height: 22px;
+  word-break: break-word;
+  font-family: 'Nunito', sans-serif;
+}
+
+.input-cursor {
+  animation: blink 1s step-start infinite;
+  color: #3b82f6;
+  font-weight: 300;
+}
+
+.input-placeholder {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* ── Progress Bar ── */
+.progress-track {
+  height: 3px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  margin-top: 7px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+  background-size: 200% auto;
+  border-radius: 2px;
+  transition: width 0.08s ease;
+  animation: shimmer 2s linear infinite;
+}
+
+/* ── Char Count ── */
+.char-count {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* ── Send Button ── */
+.send-btn {
+  background: #cbd5e1;
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: not-allowed;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: none;
+}
+
+.send-btn--active {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  cursor: pointer;
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.45);
+}
+
+.send-btn--active:hover  { transform: scale(1.14); }
+.send-btn--active:active { transform: scale(0.97); }
+
+/* ── Hint ── */
+.input-hint {
+  text-align: center;
+  font-size: 11.5px;
+  color: #94a3b8;
+  padding: 0 0 10px;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar         { width: 4px; }
+::-webkit-scrollbar-track   { background: transparent; }
+::-webkit-scrollbar-thumb   { background: #cbd5e1; border-radius: 2px; }
+
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ════════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .chat-shell {
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+    width: 90vw;
+    max-width: 480px;
+    margin: 0 auto;
+    background: #fff;
+    font-family: 'Nunito', sans-serif;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    border-radius: 24px;
+    }   
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .chat-shell { max-width: 420px; }
+}
+
+@media (min-width: 1024px) {
+  .chat-shell { max-width: 480px; height: 88vh; }
+}
+
+/* Image bubble narrower on very wide screens */
+@media (min-width: 600px) {
+  .bubble--image { max-width: 55%; }
+  .msg-image     { max-height: 320px; }
+}
+
+@media (max-width: 360px) {
+  .chat-header__name   { font-size: 15px; }
+  .chat-header__avatar { width: 38px; height: 38px; font-size: 16px; }
+  .bubble              { font-size: 13.5px; }
+  .input-text          { font-size: 13.5px; }
+  .bubble--image       { max-width: 74%; }
+  .msg-image           { max-height: 200px; }
+}
