@@ -52,15 +52,25 @@ export const SCRIPT = [
 
   { sender: "Me",  text: "san mo nakuha bisaya mo? Google translate no?" },
   { sender: "Jah", text: "may tama ka tlga (oo), mag hampang na kita" },
-  { sender: "Me",  text: "ge na nga, malakas ka sakin e" },
+  { sender: "Jah", text: "But seriously jam, I'm really sorry I made you feel that way." },
+  { sender: "Jah", text: "I want you to know that you're special to me, and you have no idea how it made me feel to have done that to you, to have gone too far, and to have belittled you in that way, making you feel small." },
+  { sender: "Jah", text: "That teasing was wrong of me to say, and I want you to know how morose I am over what happened. " },
+  { sender: "Jah", text: "I don't want this to come between us, jam. Kaya, I really hope you appreciate this thing I made, let it be a testament of how much you mean to me. " },
+  { sender: "Jah", text: "so again, i'm sorry :(((" },
+  {
+    sender: "Jah",
+    image: "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGMwem5vd2o2Z3VmOXU5cnQxdmFxNXNzajNtbXQ1M3RqY2M0ZG1kciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ffzhLUixCtlsc/giphy.gif",
+    caption: null,
+  },
+  { sender: "Jah", text: "bati na ba tauu?" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CONFIG
 // ─────────────────────────────────────────────────────────────────────────────
 const JAH_TYPING_SPEED = 28;
-const JAH_MIN_DELAY    = 800;
-const JAH_MAX_DELAY    = 5000;
+const JAH_MIN_DELAY    = 1500;
+const JAH_MAX_DELAY    = 6500;
 const SEND_PAUSE       = 420;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -288,7 +298,7 @@ export default function MessagingSimulator({ script = SCRIPT }) {
         )}
 
         {phase === "done" && (
-          <div className="done-banner">✓ End of conversation</div>
+          <div className="done-banner">Jahreez is waiting for your answer...</div>
         )}
 
         <div ref={endRef} />
@@ -332,7 +342,7 @@ export default function MessagingSimulator({ script = SCRIPT }) {
             <div className="input-text">
               <span className="input-placeholder">
                 {phase === "done"
-                  ? "Conversation complete 🎉"
+                  ? "Conversation complete, it's your time to give an answer to jahreez on messenger"
                   : phase === "jah-typing"
                   ? "Jah is typing…"
                   : "Waiting…"}
