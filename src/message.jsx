@@ -62,7 +62,7 @@ export const SCRIPT = [
     image: "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGMwem5vd2o2Z3VmOXU5cnQxdmFxNXNzajNtbXQ1M3RqY2M0ZG1kciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ffzhLUixCtlsc/giphy.gif",
     caption: null,
   },
-  { sender: "Jah", text: "bati na ba tauu?" },
+  { sender: "Jah", text: "bati na ba tayo?" },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
