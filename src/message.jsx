@@ -297,32 +297,46 @@ export default function MessagingSimulator({ script = SCRIPT }) {
       {/* ── Input Bar ── */}
       <div className="input-bar">
         <div className={`input-field ${phase === "user-typing" ? "input-field--active" : "input-field--idle"}`}>
-          <div className="input-text">
-            {phase === "user-typing" ? (
-              <>
-                <span>{currentTyped}</span>
-                <span className="input-cursor">|</span>
-              </>
-            ) : (
+          {phase === "user-typing" ? (
+            <>
+              <input
+                className="input-real"
+                type="text"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+                value={currentTyped}
+                onChange={e => {
+                  const val = e.target.value;
+                  const target = currentTurn?.text ?? "";
+                  // Only accept characters that match the script
+                  if (target.startsWith(val)) {
+                    setCurrentTyped(val);
+                  } else {
+                    // Advance character by character to keep in sync
+                    setCurrentTyped(target.slice(0, val.length));
+                  }
+                }}
+                onKeyDown={e => { if (e.key === "Enter" && canSend) { e.preventDefault(); doSend(); }}}
+                autoFocus
+              />
+              <div className="progress-track">
+                <div className="progress-fill" style={{ width: `${progress * 100}%` }} />
+              </div>
+              <div className="char-count">
+                {currentTyped.length} / {currentTurn?.text.length}
+              </div>
+            </>
+          ) : (
+            <div className="input-text">
               <span className="input-placeholder">
                 {phase === "done"
-                  ? "Conversation complete! Bati na yan uyyyy"
+                  ? "Conversation complete 🎉"
                   : phase === "jah-typing"
                   ? "Jah is typing…"
-                  : "Press any key to type…"}
+                  : "Waiting…"}
               </span>
-            )}
-          </div>
-
-          {phase === "user-typing" && (
-            <div className="progress-track">
-              <div className="progress-fill" style={{ width: `${progress * 100}%` }} />
-            </div>
-          )}
-
-          {phase === "user-typing" && currentTurn && (
-            <div className="char-count">
-              {currentTyped.length} / {currentTurn.text.length}
             </div>
           )}
         </div>
@@ -340,12 +354,12 @@ export default function MessagingSimulator({ script = SCRIPT }) {
         </button>
       </div>
 
+      {/* ── Hint ── */}
       {phase === "user-typing" && (
         <div className="input-hint">
-          Tap any key to type · Enter or ▶ to send
+          Tap the field to type · Enter or ▶ to send
         </div>
       )}
-
     </div>
   );
 }
