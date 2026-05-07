@@ -302,7 +302,7 @@ export default function MessagingSimulator({ script = SCRIPT }) {
               <input
                 className="input-real"
                 type="text"
-                autoComplete="off"
+                autoComplete="new-password"
                 autoCorrect="off"
                 autoCapitalize="off"
                 spellCheck="false"
